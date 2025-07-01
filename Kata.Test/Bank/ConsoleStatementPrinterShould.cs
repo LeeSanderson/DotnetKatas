@@ -1,7 +1,6 @@
 ﻿using Kata.Src.Bank;
 using NSubstitute;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace Kata.Test.Bank;
