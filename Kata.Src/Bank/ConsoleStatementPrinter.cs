@@ -1,14 +1,7 @@
 ﻿namespace Kata.Src.Bank;
-public class ConsoleStatementPrinter : IStatementPrinter
+public class ConsoleStatementPrinter(IConsole console) : IStatementPrinter
 {
-    public const string StatementHeader = "Date || Amount || Balance";
-
-    private IConsole console;
-
-    public ConsoleStatementPrinter(IConsole console)
-    {
-        this.console = console;
-    }
+    private const string StatementHeader = "Date || Amount || Balance";
 
     public void Print(IEnumerable<Transaction> transactions)
     {
@@ -27,13 +20,5 @@ public class ConsoleStatementPrinter : IStatementPrinter
         }
     }
 
-    private record RunningBalanceTransaction : Transaction
-    {
-        public RunningBalanceTransaction(int Value, DateTime Date, int Balance) : base(Value, Date)
-        {
-            this.Balance = Balance;
-        }
-
-        public int Balance { get; }
-    }
+    private record RunningBalanceTransaction(int Value, DateTime Date, int Balance) : Transaction(Value, Date);
 }

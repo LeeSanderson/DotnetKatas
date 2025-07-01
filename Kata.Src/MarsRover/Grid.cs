@@ -1,18 +1,11 @@
 ﻿namespace Kata.Src.MarsRover;
 
-public class Grid
+public class Grid(int maxX, int maxY, params Position[] obstaclePositions)
 {
-    private readonly Position[] obstaclePositions;
+    private readonly Position[] obstaclePositions = obstaclePositions ?? [];
 
-    public Grid(int maxX, int maxY, params Position[] obstaclePositions)
-    {
-        MaxX = maxX;
-        MaxY = maxY;
-        this.obstaclePositions = obstaclePositions ?? [];
-    }
-
-    internal int MaxX { get; }
-    internal int MaxY { get; }
+    internal int MaxX { get; } = maxX;
+    internal int MaxY { get; } = maxY;
 
     internal bool ObstacleAt(Position position) => obstaclePositions.Any(p => p == position);
 }

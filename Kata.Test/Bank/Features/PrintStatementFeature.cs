@@ -17,7 +17,7 @@ public class PrintStatementFeature
         var accountService = new AccountService(clock, new TransactionRepository(), new ConsoleStatementPrinter(console));
         accountService.Deposit(1000);
         accountService.Deposit(2000);
-        accountService.Withdral(500);
+        accountService.Withdraw(500);
         accountService.PrintStatement();
 
         Received.InOrder(() =>

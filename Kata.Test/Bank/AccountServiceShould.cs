@@ -1,6 +1,7 @@
 ﻿using Kata.Src.Bank;
 using NSubstitute;
 using System.Linq;
+using FluentAssertions;
 using Xunit;
 
 namespace Kata.Test.Bank;
@@ -23,15 +24,15 @@ public class AccountServiceShould
     {
         accountService.Deposit(1000);
 
-        Assert.Equal(1000, transactionRepository.GetAll().Single().Value);
+        transactionRepository.GetAll().Single().Value.Should().Be(1000);
     }
 
     [Fact]
     public void StoreWithDrawlTransactions()
     {
-        accountService.Withdral(1000);
+        accountService.Withdraw(1000);
 
-        Assert.Equal(-1000, transactionRepository.GetAll().Single().Value);
+        transactionRepository.GetAll().Single().Value.Should().Be(-1000);
     }
 
     [Fact]

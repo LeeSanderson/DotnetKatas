@@ -2,7 +2,7 @@
 
 public class TransactionRepository
 {
-    private readonly List<Transaction> transactions = new List<Transaction>();
+    private readonly List<Transaction> transactions = new();
 
     public IEnumerable<Transaction> GetAll()
     {
