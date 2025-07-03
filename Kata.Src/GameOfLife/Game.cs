@@ -26,11 +26,11 @@ public class Game(bool[][] universe)
         {
             if (livingNeighbours < 2) return false; // Underpopulation
             if (livingNeighbours > 3) return false; // Overpopulation
-            return true;
+            return true; // Survival
         }
 
-        // Else, currentlyDead
+        // Else, currently dead
         if (livingNeighbours == 3) return true; // Reproduction
-        return false;
+        return false; // Remains dead
     }
 }
