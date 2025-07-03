@@ -29,6 +29,7 @@ public class Game(bool[][] universe)
             return true;
         }
 
+        // Else, currentlyDead
         if (livingNeighbours == 3) return true; // Reproduction
         return false;
     }
