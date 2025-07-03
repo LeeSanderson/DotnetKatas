@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace Kata.Src.GameOfLife;
+﻿namespace Kata.Src.GameOfLife;
 
 public class Game(bool[][] universe)
 {
@@ -26,11 +24,12 @@ public class Game(bool[][] universe)
     {
         if (currentlyAlive)
         {
-            if (livingNeighbours < 2 || livingNeighbours > 3) return false;
+            if (livingNeighbours < 2) return false; // Underpopulation
+            if (livingNeighbours > 3) return false; // Overpopulation
             return true;
         }
 
-        if (livingNeighbours == 3) return true;
+        if (livingNeighbours == 3) return true; // Reproduction
         return false;
     }
 }
