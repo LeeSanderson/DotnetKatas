@@ -13,7 +13,8 @@ public class Game(bool[][] universe)
         {
             for (var j = 0; j < currentUniverse[i].Length; j++)
             {
-                nextUniverse[i][j] = IsAlive(currentUniverse[i][j], currentUniverse.GetNeighbours(i, j));
+                var livingNeighbours = currentUniverse.GetNeighbours(i, j).Count(isAlive => isAlive);
+                nextUniverse[i][j] = IsAlive(currentUniverse[i][j], livingNeighbours);
             }
         }
 
@@ -21,15 +22,15 @@ public class Game(bool[][] universe)
         return currentUniverse;
     }
 
-    private bool IsAlive(bool currentlyAlive, IEnumerable<bool> neighbours)
+    private static bool IsAlive(bool currentlyAlive, int livingNeighbours)
     {
-        var livingNeighbours = neighbours.Count(isAlive => isAlive);
         if (currentlyAlive)
         {
             if (livingNeighbours < 2 || livingNeighbours > 3) return false;
             return true;
         }
 
+        if (livingNeighbours == 3) return true;
         return false;
     }
 }

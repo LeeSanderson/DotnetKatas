@@ -36,26 +36,32 @@ public class GameShould
     [Fact]
     public void LivesIfTwoLivingNeighbours()
     {
-        bool[][] expectedUniverse = [[false, false, false], [false, true, false], [false, false, false]];
         var game = new Game([[false, false, false], [true, true, true], [false, false, false]]);
         var universe = game.NextGen();
-        universe.Should().BeEquivalentTo(expectedUniverse);
+        universe[1][1].Should().Be(true);
     }
 
     [Fact]
     public void LivesIfThreeLivingNeighbours()
     {
-        bool[][] expectedUniverse = [[false, false, false], [false, true, false], [false, false, false]];
         var game = new Game([[false, false, true], [true, true, false], [false, false, true]]);
         var universe = game.NextGen();
-        universe.Should().BeEquivalentTo(expectedUniverse);
+        universe[1][1].Should().Be(true);
     }
 
     [Fact]
     public void DiesIfMoreThanThreeLivingNeighbours()
     {
-        bool[][] expectedUniverse = [[false, false, false], [false, false, false], [false, false, false]];
         var game = new Game([[true, false, true], [false, true, false], [true, false, true]]);
+        var universe = game.NextGen();
+        universe[1][1].Should().Be(false);
+    }
+
+    [Fact]
+    public void SpawnIfDeadAndThreeLivingNeighbours()
+    {
+        bool[][] expectedUniverse = [[false, true, false], [false, true, false], [false, false, false]];
+        var game = new Game([[true, false, true], [false, true, false], [false, false, false]]);
         var universe = game.NextGen();
         universe.Should().BeEquivalentTo(expectedUniverse);
     }
