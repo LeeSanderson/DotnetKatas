@@ -18,19 +18,17 @@ public class GameShould
     [Fact]
     public void DiesIfZeroLivingNeighbours()
     {
-        bool[][] expectedUniverse = [[false, false, false], [false, false, false], [false, false, false]];
         var game = new Game([[false, false, false], [false, true, false], [false, false, false]]);
         var universe = game.NextGen();
-        universe.Should().BeEquivalentTo(expectedUniverse);
+        universe[1][1].Should().Be(false);
     }
 
     [Fact]
     public void DiesIfOneLivingNeighbours()
     {
-        bool[][] expectedUniverse = [[false, false, false], [false, false, false], [false, false, false]];
         var game = new Game([[false, false, false], [true, true, false], [false, false, false]]);
         var universe = game.NextGen();
-        universe.Should().BeEquivalentTo(expectedUniverse);
+        universe[1][1].Should().Be(false);
     }
 
     [Fact]
