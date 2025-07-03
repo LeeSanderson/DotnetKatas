@@ -41,4 +41,22 @@ public class GameShould
         var universe = game.NextGen();
         universe.Should().BeEquivalentTo(expectedUniverse);
     }
+
+    [Fact]
+    public void LivesIfThreeLivingNeighbours()
+    {
+        bool[][] expectedUniverse = [[false, false, false], [false, true, false], [false, false, false]];
+        var game = new Game([[false, false, true], [true, true, false], [false, false, true]]);
+        var universe = game.NextGen();
+        universe.Should().BeEquivalentTo(expectedUniverse);
+    }
+
+    [Fact]
+    public void DiesIfMoreThanThreeLivingNeighbours()
+    {
+        bool[][] expectedUniverse = [[false, false, false], [false, false, false], [false, false, false]];
+        var game = new Game([[true, false, true], [false, true, false], [true, false, true]]);
+        var universe = game.NextGen();
+        universe.Should().BeEquivalentTo(expectedUniverse);
+    }
 }

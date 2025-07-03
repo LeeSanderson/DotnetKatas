@@ -24,6 +24,12 @@ public class Game(bool[][] universe)
     private bool IsAlive(bool currentlyAlive, IEnumerable<bool> neighbours)
     {
         var livingNeighbours = neighbours.Count(isAlive => isAlive);
-        return currentlyAlive && !(livingNeighbours < 2);
+        if (currentlyAlive)
+        {
+            if (livingNeighbours < 2 || livingNeighbours > 3) return false;
+            return true;
+        }
+
+        return false;
     }
 }
