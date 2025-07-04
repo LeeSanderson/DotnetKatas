@@ -31,9 +31,7 @@ public static class ArrayExtensions
         }
     }
 
-    private static bool AreRowColIndicesValid<T>(this T[][] source, int row, int col)
-    {
-        return row >= 0 && row < source.Length &&
-               col >= 0 && col < source[row].Length;
-    }
+    private static bool AreRowColIndicesValid<T>(this T[][] source, int row, int col) =>
+        row >= 0 && row < source.Length &&
+        col >= 0 && col < source[row].Length;
 }
