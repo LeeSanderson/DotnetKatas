@@ -8,8 +8,6 @@ namespace Kata.Test.GameOfLife;
 
 public class ArrayExtensionsShould
 {
-
-
     [Fact]
     public void Clone2dArrays()
     {

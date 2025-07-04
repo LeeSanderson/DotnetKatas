@@ -24,11 +24,16 @@ public static class ArrayExtensions
             var neighbourRow = row + neighbourOffset.RowOffset;
             var neighbourCol = col + neighbourOffset.ColOffset;
 
-            if (neighbourRow >= 0 && neighbourRow < source.Length &&
-                neighbourCol >= 0 && neighbourCol < source[neighbourRow].Length)
+            if (source.AreRowColIndicesValid(neighbourRow, neighbourCol))
             {
                 yield return source[neighbourRow][neighbourCol];
             }
         }
+    }
+
+    private static bool AreRowColIndicesValid<T>(this T[][] source, int row, int col)
+    {
+        return row >= 0 && row < source.Length &&
+               col >= 0 && col < source[row].Length;
     }
 }
