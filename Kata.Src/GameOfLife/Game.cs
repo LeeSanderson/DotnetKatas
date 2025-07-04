@@ -11,7 +11,11 @@ public class Game(bool[][] universe)
         {
             for (var j = 0; j < currentUniverse[i].Length; j++)
             {
-                var livingNeighbours = currentUniverse.GetNeighbours(i, j).Count(isAlive => isAlive);
+                var livingNeighbours = 
+                    currentUniverse
+                        .GetNeighbours(i, j)
+                        .Count(isAlive => isAlive);
+
                 nextUniverse[i][j] = IsAlive(currentUniverse[i][j], livingNeighbours);
             }
         }
