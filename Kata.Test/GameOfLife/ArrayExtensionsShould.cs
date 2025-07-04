@@ -1,6 +1,7 @@
-﻿using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Kata.Src.GameOfLife;
+using System;
+using System.Linq;
 using Xunit;
 
 namespace Kata.Test.GameOfLife;
@@ -21,7 +22,7 @@ public class ArrayExtensionsShould
     {
         int[][] original = [[1, 2, 3], [4, 5, 6, 7], [8, 9]];
 
-        var cloned = original.DeepClone().Mutate(((v, i, j) => v * -1));
+        var cloned = Mutate(original.DeepClone(), (v, i, j) => v * -1);
         
         var flat = original.SelectMany(row => row).ToArray();
         var flatCloned = cloned.SelectMany(row => row).ToArray();
@@ -29,6 +30,18 @@ public class ArrayExtensionsShould
         flat.Should().NotBeEquivalentTo(flatCloned);
     }
 
+    private static T[][] Mutate<T>(T[][] source, Func<T, int, int, T> mutator)
+    {
+        for (var i = 0; i < source.Length; i++)
+        {
+            for (var j = 0; j < source[i].Length; j++)
+            {
+                source[i][j] = mutator(source[i][j], i, j);
+            }
+        }
+
+        return source;
+    }
 
     [Theory]
     [InlineData(0, 0, new[] { 2, 4, 5 })]

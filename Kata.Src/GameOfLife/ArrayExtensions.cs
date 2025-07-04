@@ -4,19 +4,6 @@ public static class ArrayExtensions
 {
     public static T[][] DeepClone<T>(this T[][] source) => source.Select(row => row.ToArray()).ToArray();
 
-    public static T[][] Mutate<T>(this T[][] source, Func<T, int, int, T> mutator)
-    {
-        for (var i = 0; i < source.Length; i++)
-        {
-            for (var j = 0; j < source[i].Length; j++)
-            {
-                source[i][j] = mutator(source[i][j], i, j);
-            }
-        }
-
-        return source;
-    }
-
     private record Offset (int RowOffset, int ColOffset);
     private static readonly Offset[] NeighbourOffsets =
     [
