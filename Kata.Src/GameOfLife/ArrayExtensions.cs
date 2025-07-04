@@ -6,9 +6,9 @@ public static class ArrayExtensions
 
     public static T[][] Mutate<T>(this T[][] source, Func<T, int, int, T> mutator)
     {
-        for (int i = 0; i < source.Length; i++)
+        for (var i = 0; i < source.Length; i++)
         {
-            for (int j = 0; j < source[i].Length; j++)
+            for (var j = 0; j < source[i].Length; j++)
             {
                 source[i][j] = mutator(source[i][j], i, j);
             }
@@ -17,34 +17,31 @@ public static class ArrayExtensions
         return source;
     }
 
+    private record Offset (int RowOffset, int ColOffset);
+    private static readonly Offset[] NeighbourOffsets =
+    [
+        new(-1, -1), // Top Left
+        new(-1, 0),  // Top
+        new(-1, 1),  // Top Right
+        new(0, -1),  // Left
+        new(0, 1),   // Right
+        new(1, -1),  // Bottom Left
+        new(1, 0),   // Bottom
+        new(1, 1)    // Bottom Right
+    ];
+
     public static IEnumerable<T> GetNeighbours<T>(this T[][] source, int row, int col)
     {
-        bool rowAboveAvailable = row > 0;
-        bool rowBelowAvailable = row < source.Length - 1;
-        bool colLeftAvailable = col > 0;
-        bool colRightAvailable = col < source[row].Length - 1;
+        foreach (var neighbourOffset in NeighbourOffsets)
+        { 
+            var neighbourRow = row + neighbourOffset.RowOffset;
+            var neighbourCol = col + neighbourOffset.ColOffset;
 
-        if (rowAboveAvailable)
-        {
-            if (colLeftAvailable)
-                yield return source[row - 1][col - 1]; // Top Left
-            yield return source[row - 1][col]; // Top
-            if (colRightAvailable)
-                yield return source[row - 1][col + 1]; // Top Right
-        }
-
-        if (colLeftAvailable)
-            yield return source[row][col - 1]; // Left
-        if (colRightAvailable)
-            yield return source[row][col + 1]; // Right
-
-        if (rowBelowAvailable)
-        {
-            if (colLeftAvailable)
-                yield return source[row + 1][col - 1]; // Bottom Left
-            yield return source[row + 1][col]; // Bottom
-            if (colRightAvailable)
-                yield return source[row + 1][col + 1]; // Bottom Right
+            if (neighbourRow >= 0 && neighbourRow < source.Length &&
+                neighbourCol >= 0 && neighbourCol < source[neighbourRow].Length)
+            {
+                yield return source[neighbourRow][neighbourCol];
+            }
         }
     }
 }
