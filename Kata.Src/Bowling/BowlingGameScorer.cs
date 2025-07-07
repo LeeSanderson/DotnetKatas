@@ -25,12 +25,21 @@ public class BowlingGameScorer
     {
         get
         {
-            var score = 0;
+            var totalScore = 0;
             for (var i = 0; i < currentRoll; i++)
             {
-                score += rolls[i];
+                var score = rolls[i];
+                if (score == 10) // Strike
+                {
+                    if (i + 2 < currentRoll)
+                    {
+                        score += rolls[i + 1] + rolls[i + 2];
+                    }
+                }
+
+                totalScore += score;
             }
-            return score;
+            return totalScore;
         }
     }
 }

@@ -27,8 +27,25 @@ public class BowlingGameScorerShould
     [Fact]
     public void ScoreOneForSingleRollOfOne()
     {
-        game.Roll(1, 0);
+        game.Roll(1);
         game.Score.Should().Be(1);
     }
 
+    [Fact]
+    public void Score14ForStrikeFollowedByTwoRollsOfOne()
+    {
+        game.Roll(10, 1, 1);
+        game.Score.Should().Be(14);
+    }
+
+    [Fact]
+    public void Score300ForAPerfectGame()
+    {
+        for (var i = 0; i < 12; i++)
+        {
+            game.Roll(10);
+        }
+
+        game.Score.Should().Be(300);
+    }
 }
