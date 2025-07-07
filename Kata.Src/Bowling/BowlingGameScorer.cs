@@ -26,6 +26,7 @@ public class BowlingGameScorer
         get
         {
             var totalScore = 0;
+            var frame = 0;
             for (var i = 0; i < currentRoll; i++)
             {
                 var score = rolls[i];
@@ -35,9 +36,14 @@ public class BowlingGameScorer
                     {
                         score += rolls[i + 1] + rolls[i + 2];
                     }
+                    frame++;
                 }
 
                 totalScore += score;
+                if (frame == 10) // Last frame
+                {
+                    break;
+                }
             }
             return totalScore;
         }
