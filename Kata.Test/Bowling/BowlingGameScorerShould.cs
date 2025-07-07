@@ -48,4 +48,11 @@ public class BowlingGameScorerShould
 
         game.Score.Should().Be(300);
     }
+
+    [Fact]
+    public void Score16ForSpareFollowedByTwoRollsOfTwo()
+    {
+        game.Roll(5, 5, 2, 2);
+        game.Score.Should().Be(16);
+    }
 }

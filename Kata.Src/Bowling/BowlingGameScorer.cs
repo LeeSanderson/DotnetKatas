@@ -37,6 +37,14 @@ public class BowlingGameScorer
                         totalScore += 10 + rolls[i + 1] + rolls[i + 2];
                     }
                 }
+                else if (i + 1 < currentRoll && rolls[i] + rolls[i + 1] == 10) // Spare
+                {
+                    if (i + 2 < currentRoll)
+                    {
+                        totalScore += 10 + rolls[i + 2];
+                    }
+                    i++; // Skip the next roll since it's part of the spare
+                }
                 else
                 {
                     totalScore += score;
