@@ -36,10 +36,11 @@ public class BowlingGameScorer
                     {
                         totalScore += 10 + rolls[i + 1] + rolls[i + 2];
                     }
-                    continue;
                 }
-
-                totalScore += score;
+                else
+                {
+                    totalScore += score;
+                }
             }
             return totalScore;
         }
