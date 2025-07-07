@@ -4,6 +4,7 @@ public class BowlingGameScorer
 {
     private int currentRoll;
     private readonly int[] rolls = new int[21];
+
     public void Roll(int pins)
     {
         // TODO: Check if currentRoll is within bounds
@@ -26,7 +27,6 @@ public class BowlingGameScorer
         get
         {
             var totalScore = 0;
-            var frame = 0;
             for (var i = 0; i < currentRoll; i++)
             {
                 var score = rolls[i];
@@ -34,18 +34,16 @@ public class BowlingGameScorer
                 {
                     if (i + 2 < currentRoll)
                     {
-                        score += rolls[i + 1] + rolls[i + 2];
+                        totalScore += 10 + rolls[i + 1] + rolls[i + 2];
                     }
-                    frame++;
+                    continue;
                 }
 
                 totalScore += score;
-                if (frame == 10) // Last frame
-                {
-                    break;
-                }
             }
             return totalScore;
         }
     }
+
+
 }
