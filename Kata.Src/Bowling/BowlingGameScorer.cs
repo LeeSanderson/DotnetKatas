@@ -2,15 +2,29 @@
 
 public class BowlingGameScorer
 {
-    private int currentRoll;
-    private readonly int[] rolls = new int[21];
+    private readonly List<Frame> frames = [];
+
+    public BowlingGameScorer()
+    {
+        AddFrame();
+    }
+
+    private Frame AddFrame()
+    {
+        var frame = new Frame(frames.Count + 1);
+        frames.Add(frame);
+        return frame;
+    }
 
     public void Roll(int pins)
     {
-        // TODO: Check if currentRoll is within bounds
-        // TODO: Check if pins is within bounds (0 to 10)
-        // TODO: Check if pins in frame is valid (e.g., not more than 10 in a single frame)
-        rolls[currentRoll++] = pins;
+        var currentFrame = frames[^1];
+        if (currentFrame.IsComplete)
+        {
+            currentFrame = AddFrame();
+        }
+
+        currentFrame.Roll(pins);
     }
 
     public void Roll(int firstPins, params int[] pins)
@@ -22,37 +36,29 @@ public class BowlingGameScorer
         }
     }   
 
-    public int Score
+    public int Score => frames.Sum(CalculateFrameScore);
+
+    private int CalculateFrameScore(Frame frame)
     {
-        get
+        if (frame.IsFinalFrame)
         {
-            var totalScore = 0;
-            for (var i = 0; i < currentRoll; i++)
-            {
-                var score = rolls[i];
-                if (score == 10) // Strike
-                {
-                    if (i + 2 < currentRoll)
-                    {
-                        totalScore += 10 + rolls[i + 1] + rolls[i + 2];
-                    }
-                }
-                else if (i + 1 < currentRoll && rolls[i] + rolls[i + 1] == 10) // Spare
-                {
-                    if (i + 2 < currentRoll)
-                    {
-                        totalScore += 10 + rolls[i + 2];
-                    }
-                    i++; // Skip the next roll since it's part of the spare
-                }
-                else
-                {
-                    totalScore += score;
-                }
-            }
-            return totalScore;
+            // In the final frame, all extra rolls are stored in the frame itself.
+            return frame.Rolls.Sum();
         }
+
+        if (frame.IsStrike)
+        {
+            return 10 + GetNextRolls(frame).Take(2).Sum();
+        }
+
+        if (frame.IsSpare)
+        {
+            return 10 + GetNextRolls(frame).Take(1).Sum();
+        }
+
+        return frame.Rolls.Sum();
     }
 
-
+    private IEnumerable<int> GetNextRolls(Frame frame) => 
+        frames.Where(f => f.FrameNumber > frame.FrameNumber).SelectMany(f => f.Rolls);
 }
