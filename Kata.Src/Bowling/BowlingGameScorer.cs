@@ -46,17 +46,12 @@ public class BowlingGameScorer
             return frame.Rolls.Sum();
         }
 
-        if (frame.IsStrike)
+        return frame switch
         {
-            return 10 + GetNextRolls(frame).Take(2).Sum();
-        }
-
-        if (frame.IsSpare)
-        {
-            return 10 + GetNextRolls(frame).Take(1).Sum();
-        }
-
-        return frame.Rolls.Sum();
+            { IsStrike: true } => 10 + GetNextRolls(frame).Take(2).Sum(),
+            { IsSpare: true } => 10 + GetNextRolls(frame).Take(1).Sum(),
+            _ => frame.Rolls.Sum()
+        };
     }
 
     private IEnumerable<int> GetNextRolls(Frame frame) => 
