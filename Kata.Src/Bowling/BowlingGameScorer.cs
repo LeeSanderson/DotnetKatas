@@ -27,15 +27,6 @@ public class BowlingGameScorer
         currentFrame.Roll(pins);
     }
 
-    public void Roll(int firstPins, params int[] pins)
-    {
-        Roll(firstPins);
-        foreach (var pin in pins)
-        {
-            Roll(pin);
-        }
-    }   
-
     public int Score => frames.Sum(CalculateFrameScore);
 
     private int CalculateFrameScore(Frame frame)
